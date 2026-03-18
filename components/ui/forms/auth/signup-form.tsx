@@ -23,6 +23,9 @@ import {
 } from "../../input-group";
 import { Spinner } from "../../spinner";
 import FieldInfo from "../field-info";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { toast } from "sonner";
 
 export function SignupForm({
   className,
@@ -41,6 +44,23 @@ export function SignupForm({
     },
     validators: { onSubmit: SIGN_UP_SCHEMA },
     onSubmit: async ({ value }) => {
+      try {
+        const res = await createUserWithEmailAndPassword(
+          auth,
+          value.email,
+          value.password,
+        );
+
+        const {
+          user: { displayName, email, photoURL },
+        } = res;
+
+        toast.success("Signup successful!");
+        console.dir({ res }, { depth: Infinity });
+      } catch (error) {
+        console.error(error);
+        toast.error(error instanceof Error ? error.message : "Signup failed!");
+      }
       await new Promise((resolve) => setTimeout(resolve, 3000));
       console.log(value);
     },
