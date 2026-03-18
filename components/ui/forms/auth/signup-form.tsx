@@ -1,4 +1,5 @@
-import { GalleryVerticalEnd } from "lucide-react";
+"use client";
+import { Eye, EyeOffIcon, GalleryVerticalEnd } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,11 +12,31 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "../../input-group";
+import { Activity, useState } from "react";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+
+  const handlePasswordVisibility = (field: "password" | "confirmPassword") =>
+    setShowPassword((prev) => {
+      return {
+        ...prev,
+        [field]: !prev[field],
+      };
+    });
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <form>
@@ -44,6 +65,61 @@ export function SignupForm({
               required
             />
           </Field>
+
+          <Field>
+            <FieldLabel htmlFor="password">Password</FieldLabel>
+
+            <InputGroup>
+              <InputGroupInput
+                id="inline-end-input"
+                type={showPassword.password ? "text" : "password"}
+                placeholder="Enter password"
+              />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  onClick={() => handlePasswordVisibility("password")}
+                >
+                  <Activity
+                    mode={!showPassword.password ? "visible" : "hidden"}
+                  >
+                    <EyeOffIcon />
+                  </Activity>
+                  <Activity mode={showPassword.password ? "visible" : "hidden"}>
+                    <Eye />
+                  </Activity>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor="password">Confirm Password</FieldLabel>
+
+            <InputGroup>
+              <InputGroupInput
+                id="inline-end-input"
+                type={showPassword.confirmPassword ? "text" : "password"}
+                placeholder="Enter password"
+              />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  onClick={() => handlePasswordVisibility("confirmPassword")}
+                >
+                  <Activity
+                    mode={!showPassword.confirmPassword ? "visible" : "hidden"}
+                  >
+                    <EyeOffIcon />
+                  </Activity>
+                  <Activity
+                    mode={showPassword.confirmPassword ? "visible" : "hidden"}
+                  >
+                    <Eye />
+                  </Activity>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
+          </Field>
+
           <Field>
             <Button type="submit">Create Account</Button>
           </Field>

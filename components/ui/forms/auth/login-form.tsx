@@ -1,4 +1,5 @@
-import { GalleryVerticalEnd } from "lucide-react";
+"use client";
+import { Eye, EyeOffIcon, GalleryVerticalEnd } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -10,11 +11,21 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "../../input-group";
+import { Activity, useState } from "react";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [showPassword, setShowPassword] = useState(false);
+  const handlePasswordVisibility = () => setShowPassword((prev) => !prev);
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <form>
@@ -42,6 +53,26 @@ export function LoginForm({
               placeholder="m@example.com"
               required
             />
+          </Field>
+          <Field>
+            <FieldLabel htmlFor="password">Password</FieldLabel>
+            <InputGroup>
+              <InputGroupInput
+                id="inline-end-input"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter password"
+              />
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton onClick={handlePasswordVisibility}>
+                  <Activity mode={!showPassword ? "visible" : "hidden"}>
+                    <EyeOffIcon />
+                  </Activity>
+                  <Activity mode={showPassword ? "visible" : "hidden"}>
+                    <Eye />
+                  </Activity>
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
           </Field>
           <Field>
             <Button type="submit">Login</Button>
