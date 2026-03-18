@@ -10,7 +10,9 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { SIGN_UP_SCHEMA } from "@/lib/schema";
 import { cn } from "@/lib/utils";
+import { useForm } from "@tanstack/react-form-nextjs";
 import Link from "next/link";
 import { Activity, useState } from "react";
 import {
@@ -19,8 +21,7 @@ import {
   InputGroupButton,
   InputGroupInput,
 } from "../../input-group";
-import { useForm } from "@tanstack/react-form-nextjs";
-import { SIGN_UP_SCHEMA } from "@/lib/schema";
+import { Spinner } from "../../spinner";
 import FieldInfo from "../field-info";
 
 export function SignupForm({
@@ -40,7 +41,7 @@ export function SignupForm({
     },
     validators: { onSubmit: SIGN_UP_SCHEMA },
     onSubmit: async ({ value }) => {
-      // Do something with form data
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       console.log(value);
     },
   });
@@ -173,7 +174,13 @@ export function SignupForm({
             children={([canSubmit, isSubmitting]) => (
               <Field>
                 <Button disabled={isSubmitting} type="submit">
-                  Create Account
+                  <Activity mode={isSubmitting ? "visible" : "hidden"}>
+                    <Spinner />
+                  </Activity>
+
+                  <Activity mode={isSubmitting ? "hidden" : "visible"}>
+                    Create Account
+                  </Activity>
                 </Button>
               </Field>
             )}

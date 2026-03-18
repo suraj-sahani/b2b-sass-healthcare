@@ -1,7 +1,6 @@
 "use client";
 import { Eye, EyeOffIcon, GalleryVerticalEnd } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -11,16 +10,18 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { LOGIN_SCHEMA } from "@/lib/schema";
+import { cn } from "@/lib/utils";
+import { useForm } from "@tanstack/react-form-nextjs";
+import Link from "next/link";
+import { Activity, useState } from "react";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "../../input-group";
-import { Activity, useState } from "react";
-import { useForm } from "@tanstack/react-form-nextjs";
-import { LOGIN_SCHEMA } from "@/lib/schema";
-import Link from "next/link";
+import { Spinner } from "../../spinner";
 import FieldInfo from "../field-info";
 
 export function LoginForm({
@@ -37,6 +38,7 @@ export function LoginForm({
       onSubmit: LOGIN_SCHEMA,
     },
     onSubmit: async ({ value }) => {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       console.log(value);
     },
   });
@@ -115,7 +117,12 @@ export function LoginForm({
             children={([canSubmit, isSubmitting]) => (
               <Field>
                 <Button disabled={isSubmitting} type="submit">
-                  Login
+                  <Activity mode={isSubmitting ? "visible" : "hidden"}>
+                    <Spinner />
+                  </Activity>
+                  <Activity mode={isSubmitting ? "hidden" : "visible"}>
+                    Login
+                  </Activity>
                 </Button>
               </Field>
             )}
