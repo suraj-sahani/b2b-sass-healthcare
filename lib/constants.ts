@@ -1,3 +1,4 @@
+import { Activity, AlertCircle, CheckCircle2, Clock } from "lucide-react";
 import { Patient } from "./types";
 
 export const patientsData: Patient[] = [
@@ -129,4 +130,59 @@ export const patientsData: Patient[] = [
     medications: ["Physical Therapy"],
     bloodType: "O+",
   },
+];
+
+export const weeklyActivePatients = [
+  { day: "Mon", patients: 340, appointments: 42 },
+  { day: "Tue", patients: 380, appointments: 51 },
+  { day: "Wed", patients: 420, appointments: 58 },
+  { day: "Thu", patients: 410, appointments: 55 },
+  { day: "Fri", patients: 450, appointments: 62 },
+  { day: "Sat", patients: 380, appointments: 48 },
+  { day: "Sun", patients: 300, appointments: 35 },
+];
+
+export const appointmentTrendData = [
+  { week: "Week 1", completed: 140, pending: 35, cancelled: 15 },
+  { week: "Week 2", completed: 155, pending: 32, cancelled: 13 },
+  { week: "Week 3", completed: 168, pending: 28, cancelled: 14 },
+  { week: "Week 4", completed: 172, pending: 25, cancelled: 11 },
+];
+
+export const recentActivities = [
+  {
+    id: 1,
+    patient: "Sarah Johnson",
+    action: "New appointment scheduled",
+    timestamp: "2 hours ago",
+    icon: Clock,
+  },
+  {
+    id: 2,
+    patient: "Michael Chen",
+    action: "Completed visit",
+    timestamp: "4 hours ago",
+    icon: CheckCircle2,
+  },
+  {
+    id: 3,
+    patient: "Emily Rodriguez",
+    action: "Medication updated",
+    timestamp: "6 hours ago",
+    icon: Activity,
+  },
+  {
+    id: 4,
+    patient: "James Wilson",
+    action: "Flagged for follow-up",
+    timestamp: "8 hours ago",
+    icon: AlertCircle,
+  },
+];
+
+export const departmentStats = [
+  { name: "Cardiology", patients: 150, appointments: 85, growth: "+12%" },
+  { name: "Neurology", patients: 120, appointments: 72, growth: "+8%" },
+  { name: "Pediatrics", patients: 200, appointments: 110, growth: "+15%" },
+  { name: "Orthopedics", patients: 180, appointments: 95, growth: "+10%" },
 ];
