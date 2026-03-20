@@ -1,7 +1,6 @@
 "use client";
 import { Eye, EyeOffIcon, GalleryVerticalEnd } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -11,27 +10,51 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { LOGIN_SCHEMA } from "@/lib/schema";
+import { cn } from "@/lib/utils";
+import { useForm } from "@tanstack/react-form-nextjs";
+import Link from "next/link";
+import { Activity, useState } from "react";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
 } from "../../input-group";
-import { Activity, useState } from "react";
+import { Spinner } from "../../spinner";
+import FieldInfo from "../field-info";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = useState(false);
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    validators: {
+      onSubmit: LOGIN_SCHEMA,
+    },
+    onSubmit: async ({ value }) => {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      console.log(value);
+    },
+  });
   const handlePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          form.handleSubmit();
+        }}
+      >
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
-            <a
+            <Link
               href="#"
               className="flex flex-col items-center gap-2 font-medium"
             >
@@ -39,44 +62,72 @@ export function LoginForm({
                 <GalleryVerticalEnd className="size-6" />
               </div>
               <span className="sr-only">Acme Inc.</span>
-            </a>
+            </Link>
             <h1 className="text-xl font-bold">Welcome to Acme Inc.</h1>
             <FieldDescription>
               Don&apos;t have an account? <a href="/signup">Sign up</a>
             </FieldDescription>
           </div>
-          <Field>
-            <FieldLabel htmlFor="email">Email</FieldLabel>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-            />
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="password">Password</FieldLabel>
-            <InputGroup>
-              <InputGroupInput
-                id="inline-end-input"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter password"
-              />
-              <InputGroupAddon align="inline-end">
-                <InputGroupButton onClick={handlePasswordVisibility}>
-                  <Activity mode={!showPassword ? "visible" : "hidden"}>
-                    <EyeOffIcon />
+
+          <form.Field name="email">
+            {(field) => (
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+                <FieldInfo field={field} />
+              </Field>
+            )}
+          </form.Field>
+
+          <form.Field name="password">
+            {(field) => (
+              <Field>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <InputGroup>
+                  <InputGroupInput
+                    name={field.name}
+                    value={field.state.value}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter password"
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <InputGroupAddon align="inline-end">
+                    <InputGroupButton onClick={handlePasswordVisibility}>
+                      <Activity mode={!showPassword ? "visible" : "hidden"}>
+                        <EyeOffIcon />
+                      </Activity>
+                      <Activity mode={showPassword ? "visible" : "hidden"}>
+                        <Eye />
+                      </Activity>
+                    </InputGroupButton>
+                  </InputGroupAddon>
+                </InputGroup>
+                <FieldInfo field={field} />
+              </Field>
+            )}
+          </form.Field>
+
+          <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => (
+              <Field>
+                <Button disabled={isSubmitting} type="submit">
+                  <Activity mode={isSubmitting ? "visible" : "hidden"}>
+                    <Spinner />
                   </Activity>
-                  <Activity mode={showPassword ? "visible" : "hidden"}>
-                    <Eye />
+                  <Activity mode={isSubmitting ? "hidden" : "visible"}>
+                    Login
                   </Activity>
-                </InputGroupButton>
-              </InputGroupAddon>
-            </InputGroup>
-          </Field>
-          <Field>
-            <Button type="submit">Login</Button>
-          </Field>
+                </Button>
+              </Field>
+            )}
+          />
+
           <FieldSeparator>Or</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">
             <Button variant="outline" type="button">
