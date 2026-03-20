@@ -1,22 +1,57 @@
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+"use client";
+import KPICard from "@/components/kpi-card";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import KPICard from "@/components/kpi-card";
+
+import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
-  Activity,
-  AlertCircle,
   ArrowDownRight,
   ArrowUpRight,
+  BarChart,
   Clock,
   Users,
 } from "lucide-react";
+
+import { TrendingUp } from "lucide-react";
+import {
+  Area,
+  AreaChart,
+  Bar,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from "@/components/ui/chart";
+import {
+  appointmentTrendData,
+  departmentStats,
+  recentActivities,
+  weeklyActivePatients,
+} from "@/lib/constants";
+import { WeeklyActivityChart } from "./_components/weekly-activity-chart";
+import { MonthlyAppointmentChart } from "./_components/monthly-appointment-chart";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const KpiCards = [
   {
@@ -81,6 +116,14 @@ const KpiCards = [
     ),
   },
 ];
+
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    color: "var(--chart-1)",
+  },
+} satisfies ChartConfig;
+
 export default function DashboardPage() {
   return (
     <>
@@ -111,6 +154,102 @@ export default function DashboardPage() {
               content={content}
             />
           ))}
+        </div>
+
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Weekly Activity */}
+          <WeeklyActivityChart />
+
+          {/* Monthly Activity */}
+          <MonthlyAppointmentChart />
+        </div>
+
+        {/* Bottom Section - Department Stats and Recent Activity */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Department Performance */}
+          <Card className="lg:col-span-2 bg-card border-border">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="text-foreground">
+                    Department Performance
+                  </CardTitle>
+                  <CardDescription className="text-muted-foreground">
+                    Top performing departments
+                  </CardDescription>
+                </div>
+                <Link href="/#">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-primary hover:text-primary"
+                  >
+                    View All
+                  </Button>
+                </Link>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {departmentStats.map((dept) => (
+                  <div
+                    key={dept.name}
+                    className="flex items-center justify-between p-4 border border-border rounded-lg"
+                  >
+                    <div>
+                      <p className="font-medium text-foreground">{dept.name}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {dept.patients} patients • {dept.appointments}{" "}
+                        appointments
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-primary">
+                        {dept.growth}
+                      </p>
+                      <p className="text-xs text-muted-foreground">Growth</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Recent Activity */}
+          <Card className="bg-card border-border">
+            <CardHeader>
+              <CardTitle className="text-foreground">Recent Activity</CardTitle>
+              <CardDescription className="text-muted-foreground">
+                Latest updates
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {recentActivities.map((activity) => {
+                  const Icon = activity.icon;
+                  return (
+                    <div key={activity.id} className="flex gap-3">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Icon className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-foreground truncate">
+                          {activity.patient}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {activity.action}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {activity.timestamp}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </>
