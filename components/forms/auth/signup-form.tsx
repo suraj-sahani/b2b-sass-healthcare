@@ -24,7 +24,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import FieldInfo from "../field-info";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebase/client";
 import { toast } from "sonner";
 
 export function SignupForm({
@@ -45,18 +45,21 @@ export function SignupForm({
     validators: { onSubmit: SIGN_UP_SCHEMA },
     onSubmit: async ({ value }) => {
       try {
-        const res = await createUserWithEmailAndPassword(
+        const { user } = await createUserWithEmailAndPassword(
           auth,
           value.email,
           value.password,
         );
 
-        const {
-          user: { displayName, email, photoURL },
-        } = res;
+        const idToken = await user.getIdToken();
+
+        await fetch("/api/auth/session/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ idToken }),
+        });
 
         toast.success("Signup successful!");
-        console.dir({ res }, { depth: Infinity });
       } catch (error) {
         console.error(error);
         toast.error(error instanceof Error ? error.message : "Signup failed!");

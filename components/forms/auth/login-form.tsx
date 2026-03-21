@@ -24,8 +24,9 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import FieldInfo from "../field-info";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { auth } from "@/lib/firebase/client";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 export function LoginForm({
   className,
@@ -48,8 +49,21 @@ export function LoginForm({
           value.password,
         );
 
+        const { user } = res;
+
+        // Create a session cookie
+        const idToken = await user.getIdToken();
+
+        if (!idToken) return;
+
+        await fetch("/api/auth/session/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ idToken }),
+        });
+
         toast.success("Login successful!");
-        console.dir({ res }, { depth: Infinity });
+        redirect("/dashboard");
       } catch (error) {
         console.error(error);
         toast.error(error instanceof Error ? error.message : "Login failed!");

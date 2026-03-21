@@ -1,4 +1,3 @@
-"use client";
 import KPICard from "@/components/kpi-card";
 import {
   Breadcrumb,
@@ -25,6 +24,8 @@ import Link from "next/link";
 import { MonthlyAppointmentChart } from "./_components/monthly-appointment-chart";
 import { WeeklyActivityChart } from "./_components/weekly-activity-chart";
 import { Badge } from "@/components/ui/badge";
+import { getSession } from "@/lib/firebase/session";
+import { redirect } from "next/navigation";
 
 const KpiCards = [
   {
@@ -97,7 +98,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await getSession();
+
+  if (!session.success) {
+    redirect("/login");
+  }
+
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
