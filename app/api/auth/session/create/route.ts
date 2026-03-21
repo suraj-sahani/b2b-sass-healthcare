@@ -20,9 +20,9 @@ export async function POST(req: NextRequest) {
     cookieStore.set(SESSION_COOKIE_NAME, sessionCookie, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      // sameSite: "lax",
+      sameSite: "lax",
       maxAge: SESSION_DURATION_MS / 1000,
-      // path: "/",
+      path: "/",
     });
 
     return NextResponse.json({ success: true });

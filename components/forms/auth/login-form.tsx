@@ -10,11 +10,6 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { LOGIN_SCHEMA } from "@/lib/schema";
-import { cn } from "@/lib/utils";
-import { useForm } from "@tanstack/react-form-nextjs";
-import Link from "next/link";
-import { Activity, useState } from "react";
 import {
   InputGroup,
   InputGroupAddon,
@@ -22,16 +17,22 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
-import FieldInfo from "../field-info";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
+import { LOGIN_SCHEMA } from "@/lib/schema";
+import { cn } from "@/lib/utils";
+import { useForm } from "@tanstack/react-form-nextjs";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Activity, useState } from "react";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
+import FieldInfo from "../field-info";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const form = useForm({
     defaultValues: {
@@ -63,13 +64,11 @@ export function LoginForm({
         });
 
         toast.success("Login successful!");
-        redirect("/dashboard");
+        router.push("/dashboard");
       } catch (error) {
         console.error(error);
         toast.error(error instanceof Error ? error.message : "Login failed!");
       }
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      console.log(value);
     },
   });
   const handlePasswordVisibility = () => setShowPassword((prev) => !prev);

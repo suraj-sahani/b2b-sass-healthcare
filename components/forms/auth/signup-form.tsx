@@ -26,11 +26,13 @@ import FieldInfo from "../field-info";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirmPassword: false,
@@ -60,6 +62,7 @@ export function SignupForm({
         });
 
         toast.success("Signup successful!");
+        router.push("/dashboard");
       } catch (error) {
         console.error(error);
         toast.error(error instanceof Error ? error.message : "Signup failed!");
