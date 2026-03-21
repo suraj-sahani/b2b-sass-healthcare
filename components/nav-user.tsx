@@ -35,7 +35,7 @@ export function NavUser({ user }: { user: AuthUser | null }) {
   if (!user) return null;
 
   return (
-    <SidebarMenu>
+    <SidebarMenu suppressHydrationWarning>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

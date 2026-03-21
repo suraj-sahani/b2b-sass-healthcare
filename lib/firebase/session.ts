@@ -1,8 +1,8 @@
+"use server";
 import { signOut } from "firebase/auth";
 import { cookies } from "next/headers";
 import { SESSION_COOKIE_NAME } from "../constants";
 import { auth } from "./client";
-import { adminAuth } from "./server";
 
 export const getSession = async (): Promise<
   { success: true } | { success: false }
@@ -11,23 +11,31 @@ export const getSession = async (): Promise<
     const cookieStore = await cookies();
     const session = cookieStore.get(SESSION_COOKIE_NAME);
 
-    if (!session) return { success: false };
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/session/verify`,
+      {
+        headers: {
+          [SESSION_COOKIE_NAME]: session?.value || "",
+        },
+      },
+    );
 
-    // verify session with fireabase
-    const verifiedSession = await adminAuth.verifySessionCookie("sdkj", true);
+    const isVerified: { success: boolean } = await res.json();
 
-    console.dir({ verifiedSession });
+    if (!isVerified.success) {
+      // await deleteSession();
+      return isVerified;
+    }
+
     return { success: true };
   } catch (error) {
     console.error(error);
-    await deleteSession();
     return { success: false };
   }
 };
 
 export const deleteSession = async () => {
+  const cookieStore = await cookies();
   await signOut(auth);
-  await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/session/delete`, {
-    method: "DELETE",
-  });
+  cookieStore.delete(SESSION_COOKIE_NAME);
 };
