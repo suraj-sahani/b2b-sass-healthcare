@@ -186,3 +186,6 @@ export const departmentStats = [
   { name: "Pediatrics", patients: 200, appointments: 110, growth: "+15%" },
   { name: "Orthopedics", patients: 180, appointments: 95, growth: "+10%" },
 ];
+
+export const SESSION_COOKIE_NAME = "__session";
+export const SESSION_DURATION_MS = 60 * 60 * 24 * 1000;

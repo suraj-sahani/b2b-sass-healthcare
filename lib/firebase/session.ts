@@ -1,26 +1,33 @@
+import { signOut } from "firebase/auth";
 import { cookies } from "next/headers";
-import z from "zod";
 import { SESSION_COOKIE_NAME } from "../constants";
+import { auth } from "./client";
+import { adminAuth } from "./server";
 
 export const getSession = async (): Promise<
   { success: true } | { success: false }
 > => {
-  const cookieStore = await cookies();
-  const session = await cookieStore.get(SESSION_COOKIE_NAME);
+  try {
+    const cookieStore = await cookies();
+    const session = cookieStore.get(SESSION_COOKIE_NAME);
 
-  if (session) return { success: true };
-  return { success: false };
-  // try {
-  //   const verify = await fetch(
-  //     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/session/verify`,
-  //   );
+    if (!session) return { success: false };
 
-  //   const data = await verify.json();
-  //   const validator = z.object({ success: z.literal(true) }).parse(data);
-  //   console.log("validator", validator);
-  //   return validator;
-  // } catch (error) {
-  //   console.error(error);
-  //   return { success: false };
-  // }
+    // verify session with fireabase
+    const verifiedSession = await adminAuth.verifySessionCookie("sdkj", true);
+
+    console.dir({ verifiedSession });
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    await deleteSession();
+    return { success: false };
+  }
+};
+
+export const deleteSession = async () => {
+  await signOut(auth);
+  await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/session/delete`, {
+    method: "DELETE",
+  });
 };
