@@ -21,21 +21,21 @@ import {
 export const description = "An area chart with axes";
 
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "January", online: 186, offline: 80 },
+  { month: "February", online: 305, offline: 200 },
+  { month: "March", online: 237, offline: 120 },
+  { month: "April", online: 73, offline: 190 },
+  { month: "May", online: 209, offline: 130 },
+  { month: "June", online: 214, offline: 140 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  online: {
+    label: "Online",
     color: "var(--chart-1)",
   },
-  mobile: {
-    label: "Mobile",
+  offline: {
+    label: "Offline",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
@@ -73,19 +73,19 @@ export function WeeklyActivityChart() {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Area
-              dataKey="mobile"
+              dataKey="offline"
               type="natural"
-              fill="var(--color-mobile)"
+              fill="var(--color-offline)"
               fillOpacity={0.4}
-              stroke="var(--color-mobile)"
+              stroke="var(--color-offline)"
               stackId="a"
             />
             <Area
-              dataKey="desktop"
+              dataKey="online"
               type="natural"
-              fill="var(--color-desktop)"
+              fill="var(--color-online)"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke="var(--color-online)"
               stackId="a"
             />
           </AreaChart>

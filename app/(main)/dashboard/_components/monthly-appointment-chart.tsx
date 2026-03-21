@@ -21,21 +21,21 @@ import {
 export const description = "A multiple bar chart";
 
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "January", online: 186, offline: 80 },
+  { month: "February", online: 305, offline: 200 },
+  { month: "March", online: 237, offline: 120 },
+  { month: "April", online: 73, offline: 190 },
+  { month: "May", online: 209, offline: 130 },
+  { month: "June", online: 214, offline: 140 },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  online: {
+    label: "Online",
     color: "var(--chart-1)",
   },
-  mobile: {
-    label: "Mobile",
+  offline: {
+    label: "Offline",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
@@ -62,8 +62,8 @@ export function MonthlyAppointmentChart() {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Bar dataKey="online" fill="var(--color-online)" radius={4} />
+            <Bar dataKey="offline" fill="var(--color-offline)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>

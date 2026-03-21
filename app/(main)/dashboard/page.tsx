@@ -9,49 +9,22 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import {
-  ArrowDownRight,
-  ArrowUpRight,
-  BarChart,
-  Clock,
-  Users,
-} from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Clock, Users } from "lucide-react";
 
-import { TrendingUp } from "lucide-react";
-import {
-  Area,
-  AreaChart,
-  Bar,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/ui/chart";
-import {
-  appointmentTrendData,
-  departmentStats,
-  recentActivities,
-  weeklyActivePatients,
-} from "@/lib/constants";
-import { WeeklyActivityChart } from "./_components/weekly-activity-chart";
-import { MonthlyAppointmentChart } from "./_components/monthly-appointment-chart";
+import { type ChartConfig } from "@/components/ui/chart";
+import { departmentStats, recentActivities } from "@/lib/constants";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { MonthlyAppointmentChart } from "./_components/monthly-appointment-chart";
+import { WeeklyActivityChart } from "./_components/weekly-activity-chart";
+import { Badge } from "@/components/ui/badge";
 
 const KpiCards = [
   {
@@ -181,7 +154,7 @@ export default function DashboardPage() {
                 </div>
                 <Link href="/#">
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     className="text-primary hover:text-primary"
                   >
@@ -204,12 +177,13 @@ export default function DashboardPage() {
                         appointments
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-primary">
-                        {dept.growth}
-                      </p>
-                      <p className="text-xs text-muted-foreground">Growth</p>
-                    </div>
+                    <Badge
+                      variant={"outline"}
+                      className="text-right bg-slate-100"
+                    >
+                      <p className="font-bold text-green-600">{dept.growth}</p>
+                      <p className="text-xs">Growth</p>
+                    </Badge>
                   </div>
                 ))}
               </div>
