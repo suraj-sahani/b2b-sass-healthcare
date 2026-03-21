@@ -15,7 +15,6 @@ interface NotificationState {
   fcmToken: string | null;
   notifications: AppNotification[];
   unreadCount: number;
-  // Actions
   setPermission: (permission: NotificationPermission) => void;
   setFcmToken: (token: string | null) => void;
   addNotification: (
@@ -24,6 +23,10 @@ interface NotificationState {
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   clearNotifications: () => void;
+  loading: boolean;
+  error: string | null;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
 }
 
 export const useNotificationStore = create<NotificationState>()(
@@ -73,6 +76,10 @@ export const useNotificationStore = create<NotificationState>()(
           })),
 
         clearNotifications: () => set({ notifications: [], unreadCount: 0 }),
+        loading: false,
+        error: null,
+        setLoading: (loading) => set({ loading }),
+        setError: (error) => set({ error }),
       }),
       { name: "notification-store" },
     ),

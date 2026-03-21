@@ -45,6 +45,7 @@ export function NavUser({ user }: { user: AuthUser | null }) {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
+                  suppressHydrationWarning
                   src={user?.photoURL || ""}
                   alt={user?.displayName || ""}
                 />

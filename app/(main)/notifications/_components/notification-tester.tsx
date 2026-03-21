@@ -6,24 +6,7 @@ import { Activity, useEffect, useState } from "react";
 import NotificationPermissionBadge from "./notification-permissions-badge";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
-
-const DEMO_NOTIFICATIONS = [
-  {
-    title: "New message",
-    body: "You have a new message from Alex.",
-    data: { url: "/messages" },
-  },
-  {
-    title: "Deployment complete",
-    body: "Production deployment finished successfully.",
-    data: { url: "/deployments" },
-  },
-  {
-    title: "Weekly summary",
-    body: "Your weekly report is ready to view.",
-    data: { url: "/reports" },
-  },
-];
+import { DEMO_NOTIFICATIONS } from "@/lib/constants";
 
 export default function NotificationTester() {
   const {
@@ -35,14 +18,14 @@ export default function NotificationTester() {
     showLocalNotification,
     markAsRead,
     markAllAsRead,
-    isLoading,
+    loading,
+    error,
+    setLoading,
+    setError,
   } = useNotifications();
 
-  const [requesting, setRequesting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   const handleRequestPermission = async () => {
-    setRequesting(true);
+    setLoading(true);
     setError(null);
     try {
       const granted = await requestPermission();
@@ -52,7 +35,7 @@ export default function NotificationTester() {
       setError("Something went wrong requesting permission.");
       console.error(err);
     } finally {
-      setRequesting(false);
+      setLoading(false);
     }
   };
 
@@ -65,20 +48,20 @@ export default function NotificationTester() {
       <h1>Push notifications</h1>
 
       {/* Permission status */}
-      <section style={{ marginTop: "1.5rem" }}>
-        <Activity mode={isLoading ? "visible" : "hidden"}>
-          <div className="flex items-center gap-2">
+      <section className="mt-4">
+        <Activity mode={loading ? "visible" : "hidden"}>
+          <div className="flex items-center gap-2 text-xs">
             Loading
             <Spinner />
           </div>
         </Activity>
 
-        <Activity mode={!isLoading ? "visible" : "hidden"}>
+        <Activity mode={!loading ? "visible" : "hidden"}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <NotificationPermissionBadge permission={permission} />
             {permission !== "granted" && (
-              <Button onClick={handleRequestPermission} disabled={requesting}>
-                {requesting ? "Requesting..." : "Enable notifications"}
+              <Button onClick={handleRequestPermission} disabled={loading}>
+                {loading ? "Requesting..." : "Enable notifications"}
               </Button>
             )}
           </div>
@@ -103,7 +86,7 @@ export default function NotificationTester() {
 
       {/* Fire test notifications */}
       <Activity
-        mode={permission === "granted" && !isLoading ? "visible" : "hidden"}
+        mode={permission === "granted" && !loading ? "visible" : "hidden"}
       >
         <section style={{ marginTop: "2rem" }}>
           <h2 className="font-semibold mb-2">Send a test notification</h2>

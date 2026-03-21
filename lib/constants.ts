@@ -187,5 +187,23 @@ export const departmentStats = [
   { name: "Orthopedics", patients: 180, appointments: 95, growth: "+10%" },
 ];
 
+export const DEMO_NOTIFICATIONS = [
+  {
+    title: "New message",
+    body: "You have a new message from Alex.",
+    data: { url: "/messages" },
+  },
+  {
+    title: "Deployment complete",
+    body: "Production deployment finished successfully.",
+    data: { url: "/deployments" },
+  },
+  {
+    title: "Weekly summary",
+    body: "Your weekly report is ready to view.",
+    data: { url: "/reports" },
+  },
+];
+
 export const SESSION_COOKIE_NAME = "__session";
 export const SESSION_DURATION_MS = 60 * 60 * 24 * 1000;

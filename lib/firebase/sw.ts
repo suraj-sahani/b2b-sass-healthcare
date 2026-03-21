@@ -11,7 +11,7 @@ export async function registerFirebaseServiceWorker(): Promise<ServiceWorkerRegi
       scope: "/",
     });
 
-    console.log("Firebase SW registered:", registration.scope);
+    console.log("Firebase SW registered:", registration);
     return registration;
   } catch (err) {
     console.error("Firebase SW registration failed:", err);
