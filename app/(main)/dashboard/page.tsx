@@ -24,6 +24,7 @@ import { departmentStats, recentActivities } from "@/lib/constants";
 import Link from "next/link";
 import { MonthlyAppointmentChart } from "./_components/monthly-appointment-chart";
 import { WeeklyActivityChart } from "./_components/weekly-activity-chart";
+import { Badge } from "@/components/ui/badge";
 
 const KpiCards = [
   {
@@ -153,7 +154,7 @@ export default function DashboardPage() {
                 </div>
                 <Link href="/#">
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
                     className="text-primary hover:text-primary"
                   >
@@ -176,12 +177,13 @@ export default function DashboardPage() {
                         appointments
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-primary">
-                        {dept.growth}
-                      </p>
-                      <p className="text-xs text-muted-foreground">Growth</p>
-                    </div>
+                    <Badge
+                      variant={"outline"}
+                      className="text-right bg-slate-100"
+                    >
+                      <p className="font-bold text-green-600">{dept.growth}</p>
+                      <p className="text-xs">Growth</p>
+                    </Badge>
                   </div>
                 ))}
               </div>

@@ -51,41 +51,22 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "Overview",
       url: "#",
       icon: <TerminalSquareIcon />,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Dashboard",
+          url: "/dashboard",
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Patients",
+          url: "/patients",
         },
         {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: <BotIcon />,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
+          title: "Analytics",
+          url: "/analytics",
         },
       ],
     },
@@ -95,19 +76,11 @@ const data = {
       icon: <BookOpenIcon />,
       items: [
         {
-          title: "Introduction",
+          title: "Reports",
           url: "#",
         },
         {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
+          title: "Users",
           url: "#",
         },
       ],
@@ -138,19 +111,22 @@ const data = {
   ],
   projects: [
     {
-      name: "Design Engineering",
+      name: "Research",
       url: "#",
       icon: <FrameIcon />,
+      showMenu: true,
     },
     {
       name: "Sales & Marketing",
       url: "#",
       icon: <PieChartIcon />,
+      showMenu: false,
     },
     {
-      name: "Travel",
+      name: "Projects",
       url: "#",
       icon: <MapIcon />,
+      showMenu: true,
     },
   ],
 };
