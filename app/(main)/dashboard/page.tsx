@@ -9,49 +9,21 @@ import {
 
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import {
-  ArrowDownRight,
-  ArrowUpRight,
-  BarChart,
-  Clock,
-  Users,
-} from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Clock, Users } from "lucide-react";
 
-import { TrendingUp } from "lucide-react";
-import {
-  Area,
-  AreaChart,
-  Bar,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/ui/chart";
-import {
-  appointmentTrendData,
-  departmentStats,
-  recentActivities,
-  weeklyActivePatients,
-} from "@/lib/constants";
-import { WeeklyActivityChart } from "./_components/weekly-activity-chart";
-import { MonthlyAppointmentChart } from "./_components/monthly-appointment-chart";
+import { type ChartConfig } from "@/components/ui/chart";
+import { departmentStats, recentActivities } from "@/lib/constants";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { MonthlyAppointmentChart } from "./_components/monthly-appointment-chart";
+import { WeeklyActivityChart } from "./_components/weekly-activity-chart";
 
 const KpiCards = [
   {
