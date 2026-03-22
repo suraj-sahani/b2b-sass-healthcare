@@ -85,6 +85,9 @@ export function useNotifications() {
         }
 
         unsubscribe = onMessage(messaging, (payload) => {
+          toast.info(
+            `${payload.notification?.title ?? "New notification"}: ${payload.notification?.body ?? ""}`,
+          );
           addNotification({
             title: payload.notification?.title ?? "New notification",
             body: payload.notification?.body ?? "",
