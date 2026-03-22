@@ -57,12 +57,14 @@ export function SignupForm({
         );
 
         const idToken = await user.getIdToken();
-
-        await fetch("/api/auth/session/create", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ idToken }),
-        });
+        await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/session/create`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idToken }),
+          },
+        );
 
         toast.success("Signup successful!");
         router.push("/dashboard");

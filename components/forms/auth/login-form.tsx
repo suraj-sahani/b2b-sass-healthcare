@@ -59,11 +59,14 @@ export function LoginForm({
 
         if (!idToken) return;
 
-        await fetch("/api/auth/session/create", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ idToken }),
-        });
+        await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/session/create`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idToken }),
+          },
+        );
 
         toast.success("Login successful!");
         router.push("/dashboard");

@@ -21,7 +21,7 @@ export const getSession = async (): Promise<
     );
 
     const isVerified: { success: boolean } = await res.json();
-
+    console.log(isVerified);
     if (!isVerified.success) {
       // await deleteSession();
       return isVerified;
