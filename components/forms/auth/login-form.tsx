@@ -28,6 +28,7 @@ import { Activity, useState } from "react";
 import { toast } from "sonner";
 import FieldInfo from "../field-info";
 import { useSession } from "@/hooks/use-session";
+import { createSession } from "@/lib/firebase/session";
 
 export function LoginForm({
   className,
@@ -59,14 +60,10 @@ export function LoginForm({
 
         if (!idToken) return;
 
-        await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/session/create`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ idToken }),
-          },
-        );
+        const sessionCreate = await createSession(idToken);
+
+        if (!sessionCreate.success)
+          throw new Error("Failed to create session.");
 
         toast.success("Login successful!");
         router.push("/dashboard");

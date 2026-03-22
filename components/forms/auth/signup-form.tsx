@@ -28,6 +28,7 @@ import { auth } from "@/lib/firebase/client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/hooks/use-session";
+import { createSession } from "@/lib/firebase/session";
 
 export function SignupForm({
   className,
@@ -57,14 +58,11 @@ export function SignupForm({
         );
 
         const idToken = await user.getIdToken();
-        await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/session/create`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ idToken }),
-          },
-        );
+
+        const sessionCreate = await createSession(idToken);
+
+        if (!sessionCreate.success)
+          throw new Error("Failed to create session.");
 
         toast.success("Signup successful!");
         router.push("/dashboard");
