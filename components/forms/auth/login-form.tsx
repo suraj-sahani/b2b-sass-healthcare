@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import FieldInfo from "../field-info";
 import { useSession } from "@/hooks/use-session";
 import { createSession } from "@/lib/firebase/session";
+import { FirebaseError } from "firebase/app";
 
 export function LoginForm({
   className,
@@ -69,7 +70,12 @@ export function LoginForm({
         router.push("/dashboard");
       } catch (error) {
         console.error(error);
-        toast.error(error instanceof Error ? error.message : "Login failed!");
+        const err =
+          error instanceof FirebaseError &&
+          error.code === "auth/invalid-credential"
+            ? "Invalid credentials"
+            : "Something went wrong!";
+        toast.error(err);
       }
     },
   });

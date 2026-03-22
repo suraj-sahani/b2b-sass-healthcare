@@ -1,16 +1,11 @@
 "use client";
 import { auth } from "@/lib/firebase/client";
-import {
-  createSession,
-  deleteSession,
-  getSession,
-} from "@/lib/firebase/session";
+import { createSession } from "@/lib/firebase/session";
 import { useAuthStore } from "@/lib/store/use-auth-store";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
-  signOut,
 } from "firebase/auth";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -22,14 +17,6 @@ export function useSession() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        const idToken = await firebaseUser.getIdToken();
-
-        // Need to verify is the session is still valid.
-        const session = await getSession();
-        if (!session.success) {
-          await deleteSession();
-        }
-
         setUser({
           uid: firebaseUser.uid,
           email: firebaseUser.email,
