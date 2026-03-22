@@ -17,17 +17,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-
-export const description = "An area chart with axes";
-
-const chartData = [
-  { month: "January", online: 186, offline: 80 },
-  { month: "February", online: 305, offline: 200 },
-  { month: "March", online: 237, offline: 120 },
-  { month: "April", online: 73, offline: 190 },
-  { month: "May", online: 209, offline: 130 },
-  { month: "June", online: 214, offline: 140 },
-];
+import { WEEKLY_ACTIVITIES } from "@/lib/constants";
 
 const chartConfig = {
   online: {
@@ -51,7 +41,7 @@ export function WeeklyActivityChart() {
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={WEEKLY_ACTIVITIES}
             margin={{
               left: -20,
               right: 12,

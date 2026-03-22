@@ -1,6 +1,10 @@
 "use client";
 import { auth } from "@/lib/firebase/client";
-import { deleteSession, getSession } from "@/lib/firebase/session";
+import {
+  createSession,
+  deleteSession,
+  getSession,
+} from "@/lib/firebase/session";
 import { useAuthStore } from "@/lib/store/use-auth-store";
 import {
   GoogleAuthProvider,
@@ -51,11 +55,7 @@ export function useSession() {
 
       if (!idToken) return;
 
-      await fetch("/api/auth/session/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idToken }),
-      });
+      await createSession(idToken);
 
       toast.success("Login successful!");
     } catch (error) {

@@ -5,15 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-const conditionFrequencyData = [
-  { condition: "Hypertension", cases: 420, trend: "+8%" },
-  { condition: "Diabetes", cases: 380, trend: "+12%" },
-  { condition: "Arthritis", cases: 280, trend: "+5%" },
-  { condition: "GERD", cases: 220, trend: "-2%" },
-  { condition: "Asthma", cases: 190, trend: "+3%" },
-  { condition: "Migraines", cases: 160, trend: "+6%" },
-];
+import { CONDITION_FREQUENCY } from "@/lib/constants";
 
 export default function MostCommonCondition() {
   return (
@@ -28,7 +20,7 @@ export default function MostCommonCondition() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {conditionFrequencyData.map((item, index) => (
+          {CONDITION_FREQUENCY.map((item, index) => (
             <div
               key={index}
               className="flex items-center justify-between p-1.5 bg-muted/30 rounded-lg border-2"

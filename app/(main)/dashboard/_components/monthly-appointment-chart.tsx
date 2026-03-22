@@ -17,17 +17,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-
-export const description = "A multiple bar chart";
-
-const chartData = [
-  { month: "January", online: 186, offline: 80 },
-  { month: "February", online: 305, offline: 200 },
-  { month: "March", online: 237, offline: 120 },
-  { month: "April", online: 73, offline: 190 },
-  { month: "May", online: 209, offline: 130 },
-  { month: "June", online: 214, offline: 140 },
-];
+import { MONTHLY_APPOINTMENT } from "@/lib/constants";
 
 const chartConfig = {
   online: {
@@ -49,7 +39,7 @@ export function MonthlyAppointmentChart() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={MONTHLY_APPOINTMENT}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="month"

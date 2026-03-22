@@ -20,6 +20,8 @@ import {
 import { ReadmissionChart } from "./_components/readmission-chart";
 import MostCommonCondition from "./_components/common-conditions";
 import { VisitorsChart } from "./_components/visitors-chart";
+import { getSession } from "@/lib/firebase/session";
+import { redirect } from "next/navigation";
 
 const AnalyticsKpiCards = [
   {
@@ -84,7 +86,13 @@ const AnalyticsKpiCards = [
   },
 ];
 
-export default function AnalyticsPage() {
+export default async function AnalyticsPage() {
+  const session = await getSession();
+
+  if (!session.success) {
+    redirect("/login");
+  }
+
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">

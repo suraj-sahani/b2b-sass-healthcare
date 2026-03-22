@@ -7,6 +7,7 @@ import { registerFirebaseServiceWorker } from "@/lib/firebase/sw";
 import { useNotificationStore } from "@/lib/store/use-notification-store";
 import { useAuthStore } from "@/lib/store/use-auth-store";
 import { toast } from "sonner";
+import { fcmSubscribe, fcmUnsubscribe } from "@/lib/firebase/notification";
 
 export function useNotifications() {
   const {
@@ -61,27 +62,16 @@ export function useNotifications() {
           serviceWorkerRegistration: swRegistration,
         });
 
-        console.dir({ currentToken, fcmToken });
-
         if (currentToken && currentToken !== fcmToken) {
           console.log("[FCM] Token rotated — updating...");
 
           // Delete old token from Firestore
-          await fetch("/api/notifications/unsubscribe", {
-            method: "POST",
-            credentials: "same-origin",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ token: fcmToken }),
-          });
+          await fcmUnsubscribe(fcmToken);
 
           // Save new token
           setFcmToken(currentToken);
-          await fetch("/api/notifications/subscribe", {
-            method: "POST",
-            credentials: "same-origin",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ token: currentToken }),
-          });
+
+          await fcmSubscribe(currentToken);
         }
 
         unsubscribe = onMessage(messaging, (payload) => {
@@ -124,7 +114,6 @@ export function useNotifications() {
       await navigator.serviceWorker.ready;
 
       const messaging = await getFirebaseMessaging();
-      console.dir({ messaging });
       if (!messaging) {
         console.error("[FCM] Firebase messaging not supported");
         return false;
@@ -144,12 +133,7 @@ export function useNotifications() {
 
       setFcmToken(fcmToken);
 
-      await fetch("/api/notifications/subscribe", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: fcmToken }),
-      });
+      await fcmSubscribe(fcmToken);
 
       setLoading(false);
       return true;

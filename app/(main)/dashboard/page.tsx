@@ -19,7 +19,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { type ChartConfig } from "@/components/ui/chart";
-import { departmentStats, recentActivities } from "@/lib/constants";
+import { DEPARTMENT_STATS, RECENT_ACTIVITIES } from "@/lib/constants";
 import Link from "next/link";
 import { MonthlyAppointmentChart } from "./_components/monthly-appointment-chart";
 import { WeeklyActivityChart } from "./_components/weekly-activity-chart";
@@ -172,7 +172,7 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {departmentStats.map((dept) => (
+                {DEPARTMENT_STATS.map((dept) => (
                   <div
                     key={dept.name}
                     className="flex items-center justify-between p-4 border border-border rounded-lg"
@@ -207,7 +207,7 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {recentActivities.map((activity) => {
+                {RECENT_ACTIVITIES.map((activity) => {
                   const Icon = activity.icon;
                   return (
                     <div key={activity.id} className="flex gap-3">

@@ -15,7 +15,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { patientsData } from "@/lib/constants";
+import { PATIENTS_DATA } from "@/lib/constants";
 import { getStatusColor } from "@/lib/utils";
 import {
   Calendar,
@@ -33,7 +33,7 @@ export default function PatientsView() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredPatients = patientsData.filter(
+  const filteredPatients = PATIENTS_DATA.filter(
     (patient) =>
       patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.email.toLowerCase().includes(searchTerm.toLowerCase()) ||

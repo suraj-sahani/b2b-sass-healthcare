@@ -1,7 +1,7 @@
 import { Activity, AlertCircle, CheckCircle2, Clock } from "lucide-react";
 import { Patient } from "./types";
 
-export const patientsData: Patient[] = [
+export const PATIENTS_DATA: Patient[] = [
   {
     id: "P001",
     name: "Sarah Johnson",
@@ -132,24 +132,7 @@ export const patientsData: Patient[] = [
   },
 ];
 
-export const weeklyActivePatients = [
-  { day: "Mon", patients: 340, appointments: 42 },
-  { day: "Tue", patients: 380, appointments: 51 },
-  { day: "Wed", patients: 420, appointments: 58 },
-  { day: "Thu", patients: 410, appointments: 55 },
-  { day: "Fri", patients: 450, appointments: 62 },
-  { day: "Sat", patients: 380, appointments: 48 },
-  { day: "Sun", patients: 300, appointments: 35 },
-];
-
-export const appointmentTrendData = [
-  { week: "Week 1", completed: 140, pending: 35, cancelled: 15 },
-  { week: "Week 2", completed: 155, pending: 32, cancelled: 13 },
-  { week: "Week 3", completed: 168, pending: 28, cancelled: 14 },
-  { week: "Week 4", completed: 172, pending: 25, cancelled: 11 },
-];
-
-export const recentActivities = [
+export const RECENT_ACTIVITIES = [
   {
     id: 1,
     patient: "Sarah Johnson",
@@ -180,7 +163,7 @@ export const recentActivities = [
   },
 ];
 
-export const departmentStats = [
+export const DEPARTMENT_STATS = [
   { name: "Cardiology", patients: 150, appointments: 85, growth: "+12%" },
   { name: "Neurology", patients: 120, appointments: 72, growth: "+8%" },
   { name: "Pediatrics", patients: 200, appointments: 110, growth: "+15%" },
@@ -203,6 +186,127 @@ export const DEMO_NOTIFICATIONS = [
     body: "Your weekly report is ready to view.",
     data: { url: "/reports" },
   },
+];
+
+export const WEEKLY_ACTIVITIES = [
+  { month: "January", online: 186, offline: 80 },
+  { month: "February", online: 305, offline: 200 },
+  { month: "March", online: 237, offline: 120 },
+  { month: "April", online: 73, offline: 190 },
+  { month: "May", online: 209, offline: 130 },
+  { month: "June", online: 214, offline: 140 },
+];
+
+export const MONTHLY_APPOINTMENT = [
+  { month: "January", online: 186, offline: 80 },
+  { month: "February", online: 305, offline: 200 },
+  { month: "March", online: 237, offline: 120 },
+  { month: "April", online: 73, offline: 190 },
+  { month: "May", online: 209, offline: 130 },
+  { month: "June", online: 214, offline: 140 },
+];
+
+export const READMISSIONS = [
+  { date: "2024-04-01", onlline: 222, offline: 150 },
+  { date: "2024-04-02", onlline: 97, offline: 180 },
+  { date: "2024-04-03", onlline: 167, offline: 120 },
+  { date: "2024-04-04", onlline: 242, offline: 260 },
+  { date: "2024-04-05", onlline: 373, offline: 290 },
+  { date: "2024-04-06", onlline: 301, offline: 340 },
+  { date: "2024-04-07", onlline: 245, offline: 180 },
+  { date: "2024-04-08", onlline: 409, offline: 320 },
+  { date: "2024-04-09", onlline: 59, offline: 110 },
+  { date: "2024-04-10", onlline: 261, offline: 190 },
+  { date: "2024-04-11", onlline: 327, offline: 350 },
+  { date: "2024-04-12", onlline: 292, offline: 210 },
+  { date: "2024-04-13", onlline: 342, offline: 380 },
+  { date: "2024-04-14", onlline: 137, offline: 220 },
+  { date: "2024-04-15", onlline: 120, offline: 170 },
+  { date: "2024-04-16", onlline: 138, offline: 190 },
+  { date: "2024-04-17", onlline: 446, offline: 360 },
+  { date: "2024-04-18", onlline: 364, offline: 410 },
+  { date: "2024-04-19", onlline: 243, offline: 180 },
+  { date: "2024-04-20", onlline: 89, offline: 150 },
+  { date: "2024-04-21", onlline: 137, offline: 200 },
+  { date: "2024-04-22", onlline: 224, offline: 170 },
+  { date: "2024-04-23", onlline: 138, offline: 230 },
+  { date: "2024-04-24", onlline: 387, offline: 290 },
+  { date: "2024-04-25", onlline: 215, offline: 250 },
+  { date: "2024-04-26", onlline: 75, offline: 130 },
+  { date: "2024-04-27", onlline: 383, offline: 420 },
+  { date: "2024-04-28", onlline: 122, offline: 180 },
+  { date: "2024-04-29", onlline: 315, offline: 240 },
+  { date: "2024-04-30", onlline: 454, offline: 380 },
+  { date: "2024-05-01", onlline: 165, offline: 220 },
+  { date: "2024-05-02", onlline: 293, offline: 310 },
+  { date: "2024-05-03", onlline: 247, offline: 190 },
+  { date: "2024-05-04", onlline: 385, offline: 420 },
+  { date: "2024-05-05", onlline: 481, offline: 390 },
+  { date: "2024-05-06", onlline: 498, offline: 520 },
+  { date: "2024-05-07", onlline: 388, offline: 300 },
+  { date: "2024-05-08", onlline: 149, offline: 210 },
+  { date: "2024-05-09", onlline: 227, offline: 180 },
+  { date: "2024-05-10", onlline: 293, offline: 330 },
+  { date: "2024-05-11", onlline: 335, offline: 270 },
+  { date: "2024-05-12", onlline: 197, offline: 240 },
+  { date: "2024-05-13", onlline: 197, offline: 160 },
+  { date: "2024-05-14", onlline: 448, offline: 490 },
+  { date: "2024-05-15", onlline: 473, offline: 380 },
+  { date: "2024-05-16", onlline: 338, offline: 400 },
+  { date: "2024-05-17", onlline: 499, offline: 420 },
+  { date: "2024-05-18", onlline: 315, offline: 350 },
+  { date: "2024-05-19", onlline: 235, offline: 180 },
+  { date: "2024-05-20", onlline: 177, offline: 230 },
+  { date: "2024-05-21", onlline: 82, offline: 140 },
+  { date: "2024-05-22", onlline: 81, offline: 120 },
+  { date: "2024-05-23", onlline: 252, offline: 290 },
+  { date: "2024-05-24", onlline: 294, offline: 220 },
+  { date: "2024-05-25", onlline: 201, offline: 250 },
+  { date: "2024-05-26", onlline: 213, offline: 170 },
+  { date: "2024-05-27", onlline: 420, offline: 460 },
+  { date: "2024-05-28", onlline: 233, offline: 190 },
+  { date: "2024-05-29", onlline: 78, offline: 130 },
+  { date: "2024-05-30", onlline: 340, offline: 280 },
+  { date: "2024-05-31", onlline: 178, offline: 230 },
+  { date: "2024-06-01", onlline: 178, offline: 200 },
+  { date: "2024-06-02", onlline: 470, offline: 410 },
+  { date: "2024-06-03", onlline: 103, offline: 160 },
+  { date: "2024-06-04", onlline: 439, offline: 380 },
+  { date: "2024-06-05", onlline: 88, offline: 140 },
+  { date: "2024-06-06", onlline: 294, offline: 250 },
+  { date: "2024-06-07", onlline: 323, offline: 370 },
+  { date: "2024-06-08", onlline: 385, offline: 320 },
+  { date: "2024-06-09", onlline: 438, offline: 480 },
+  { date: "2024-06-10", onlline: 155, offline: 200 },
+  { date: "2024-06-11", onlline: 92, offline: 150 },
+  { date: "2024-06-12", onlline: 492, offline: 420 },
+  { date: "2024-06-13", onlline: 81, offline: 130 },
+  { date: "2024-06-14", onlline: 426, offline: 380 },
+  { date: "2024-06-15", onlline: 307, offline: 350 },
+  { date: "2024-06-16", onlline: 371, offline: 310 },
+  { date: "2024-06-17", onlline: 475, offline: 520 },
+  { date: "2024-06-18", onlline: 107, offline: 170 },
+  { date: "2024-06-19", onlline: 341, offline: 290 },
+  { date: "2024-06-20", onlline: 408, offline: 450 },
+  { date: "2024-06-21", onlline: 169, offline: 210 },
+  { date: "2024-06-22", onlline: 317, offline: 270 },
+  { date: "2024-06-23", onlline: 480, offline: 530 },
+  { date: "2024-06-24", onlline: 132, offline: 180 },
+  { date: "2024-06-25", onlline: 141, offline: 190 },
+  { date: "2024-06-26", onlline: 434, offline: 380 },
+  { date: "2024-06-27", onlline: 448, offline: 490 },
+  { date: "2024-06-28", onlline: 149, offline: 200 },
+  { date: "2024-06-29", onlline: 103, offline: 160 },
+  { date: "2024-06-30", onlline: 446, offline: 400 },
+];
+
+export const CONDITION_FREQUENCY = [
+  { condition: "Hypertension", cases: 420, trend: "+8%" },
+  { condition: "Diabetes", cases: 380, trend: "+12%" },
+  { condition: "Arthritis", cases: 280, trend: "+5%" },
+  { condition: "GERD", cases: 220, trend: "-2%" },
+  { condition: "Asthma", cases: 190, trend: "+3%" },
+  { condition: "Migraines", cases: 160, trend: "+6%" },
 ];
 
 export const SESSION_COOKIE_NAME = "__session";
