@@ -25,6 +25,7 @@ import {
   PieChartIcon,
   MapIcon,
 } from "lucide-react";
+import { useAuthStore } from "@/lib/store/use-auth-store";
 
 const data = {
   user: {
@@ -67,6 +68,10 @@ const data = {
         {
           title: "Analytics",
           url: "/analytics",
+        },
+        {
+          title: "Notifications",
+          url: "/notifications",
         },
       ],
     },
@@ -132,6 +137,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const user = useAuthStore((store) => store.user);
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -142,7 +148,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

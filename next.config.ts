@@ -5,6 +5,9 @@ ENV.parse(process.env);
 
 const nextConfig: NextConfig = {
   typedRoutes: true,
+  devIndicators: {
+    position: "bottom-right",
+  },
 };
 
 export default nextConfig;
