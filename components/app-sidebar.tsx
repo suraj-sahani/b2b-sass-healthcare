@@ -70,7 +70,7 @@ const data = {
           url: "/analytics",
         },
         {
-          title: "Notifications Tester",
+          title: "Notifications",
           url: "/notifications",
         },
       ],

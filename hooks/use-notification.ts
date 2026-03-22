@@ -61,6 +61,8 @@ export function useNotifications() {
           serviceWorkerRegistration: swRegistration,
         });
 
+        console.dir({ currentToken, fcmToken });
+
         if (currentToken && currentToken !== fcmToken) {
           console.log("[FCM] Token rotated — updating...");
 
@@ -95,8 +97,6 @@ export function useNotifications() {
         // setLoading(false);
       }
     })();
-    console.dir({ isAuthenticated, fcmToken, addNotification });
-    // return () => unsubscribe?.();
   }, [isAuthenticated, fcmToken, addNotification, setPermission]);
 
   const requestPermission = async (): Promise<boolean> => {
@@ -127,11 +127,6 @@ export function useNotifications() {
         return false;
       }
 
-      console.log(
-        "[FCM] Requesting token with VAPID key:",
-        process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-      );
-
       const fcmToken = await getToken(messaging, {
         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
         serviceWorkerRegistration: swRegistration,
@@ -144,7 +139,6 @@ export function useNotifications() {
         return false;
       }
 
-      console.log("[FCM] Token obtained:", fcmToken);
       setFcmToken(fcmToken);
 
       await fetch("/api/notifications/subscribe", {
@@ -176,9 +170,12 @@ export function useNotifications() {
 
     // Also show as a native browser notification
     navigator.serviceWorker.ready.then((reg) => {
-      console.log(
-        `[FCM] Showing local notification: ${title} - ${body} - ${data}`,
-      );
+      console.dir({
+        message: `[FCM] Showing local notification`,
+        title,
+        body,
+        data,
+      });
       reg.showNotification(title, {
         body,
         icon: "/favicon.ico",

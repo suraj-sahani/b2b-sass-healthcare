@@ -91,8 +91,9 @@ export default function NotificationTester() {
         <section style={{ marginTop: "2rem" }}>
           <h2 className="font-semibold mb-2">Send a test notification</h2>
           <p className="text-xs mb-4">
-            These fire instantly in the foreground. To test background delivery,
-            switch to another tab then click.
+            These fire local messages instantly in the foreground. To test
+            background delivery, switch to another tab and send messages from
+            firebase console.
           </p>
           <div className="flex flex-col gap-2 max-w-xl">
             {DEMO_NOTIFICATIONS.map((n) => (

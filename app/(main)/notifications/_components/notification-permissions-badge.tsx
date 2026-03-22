@@ -36,7 +36,7 @@ export default function NotificationPermissionBadge({
   const c = config[permission as keyof typeof config] ?? config.unknown;
 
   return (
-    <Badge variant={c.variant} className={cn(c.className)}>
+    <Badge variant={c.variant} className={cn("h-6", c.className)}>
       {c.label}
     </Badge>
   );

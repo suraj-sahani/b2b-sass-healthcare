@@ -24,12 +24,18 @@ import {
   ChevronsUpDownIcon,
   CreditCardIcon,
   LogOutIcon,
+  MessageCircleMore,
   SparklesIcon,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Badge } from "./ui/badge";
+import { useNotificationStore } from "@/lib/store/use-notification-store";
+import { Activity } from "react";
+import Link from "next/link";
 
 export function NavUser({ user }: { user: AuthUser | null }) {
   const router = useRouter();
+  const newNotifications = useNotificationStore((store) => store.unreadCount);
   const { isMobile } = useSidebar();
 
   if (!user) return null;
@@ -41,7 +47,7 @@ export function NavUser({ user }: { user: AuthUser | null }) {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground border-2 relative overflow-visible"
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
@@ -49,7 +55,7 @@ export function NavUser({ user }: { user: AuthUser | null }) {
                   src={user?.photoURL || ""}
                   alt={user?.displayName || ""}
                 />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">JD</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
@@ -57,6 +63,10 @@ export function NavUser({ user }: { user: AuthUser | null }) {
                 </span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
+              <Activity mode={newNotifications > 0 ? "visible" : "hidden"}>
+                <Badge variant={"default"}>{newNotifications}</Badge>
+              </Activity>
+
               <ChevronsUpDownIcon className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -101,8 +111,13 @@ export function NavUser({ user }: { user: AuthUser | null }) {
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <BellIcon />
-                Notifications
+                <Link
+                  href={"/notifications"}
+                  className="flex items-center gap-2"
+                >
+                  <BellIcon />
+                  Notifications
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
